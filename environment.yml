@@ -1,9 +1,0 @@
-name: oscal-sandbox
-dependencies:
-    - python
-    - pip
-    - setuptools
-    - matplotlib
-    - jupyterlab
-    - pip:
-      - compliance-trestle==0.28.1
