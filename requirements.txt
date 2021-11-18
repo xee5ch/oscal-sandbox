@@ -1,5 +1,6 @@
 compliance-trestle
 ipywidgets
+jupyterlab
 jupyter_contrib_nbextensions
 numpy
 matplotlib

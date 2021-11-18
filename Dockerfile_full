@@ -1,0 +1,42 @@
+FROM ubuntu:focal as saxonica-build
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG NB_USER=jovyan
+ARG NB_UID=1000
+
+# cache-busting to force rebuild the image in mybinder.org.
+RUN echo cache-busting-6
+
+COPY apt.txt /tmp/apt.txt
+COPY requirements.txt /tmp/requirements.txt
+
+RUN apt-get update && \
+  apt-get install -y $(cat /tmp/apt.txt | tr '\n' ' ') && \
+  rm -rf /var/lib/apt/lists/* && \
+  pip3 install --no-cache-dir -U -r /tmp/requirements.txt && \
+  rm -f /tmp/{apt.txt,requirements.txt}
+
+# Support UTF-8 filename in Python (https://stackoverflow.com/a/31754469)
+ENV LC_CTYPE=C.UTF-8
+ENV USER ${NB_USER}
+ENV NB_UID ${NB_UID}
+ENV HOME /home/${NB_USER}
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
+
+# Install tslab
+ENV PATH $PATH:${HOME}/.npm-global/bin
+RUN mkdir ~/.npm-global &&\
+  npm config set prefix '~/.npm-global' &&\
+  npm install -g tslab &&\
+  tslab install
+COPY --chown=1000:1000 . /home/oscal-sandbox
+
+# Notes:
+# 1. Do not use ENTRYPOINT because mybinder need to run a custom command.
+# 2. To use JupyterNotebook, replace "lab" with notebook".
+# 3. Set --allow-root in case you want to run jupyter as root.
+CMD ["jupyter", "lab", "--ip=0.0.0.0"]
