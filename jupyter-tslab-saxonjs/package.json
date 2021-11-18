@@ -1,0 +1,26 @@
+{
+  "name": "jupyter-tslab-saxonjs",
+  "version": "0.0.1",
+  "description": "A prototype collection of NodeJS and Typescript for OSCAL processing, run through Jupyter via tslab.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xee5ch/oscal-sandbox.git"
+  },
+  "keywords": [
+    "oscal",
+    "oscal+js"
+  ],
+  "author": "Al S",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/xee5ch/oscal-sandbox/issues"
+  },
+  "homepage": "https://github.com/xee5ch/oscal-sandbox#readme",
+  "dependencies": {
+    "saxon-js": "^2.3.0"
+  }
+}
